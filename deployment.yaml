@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Product
+metadata:
+  namespace: default
+  labels:
+    app: chis-schedule-management
+    env: production
+  name: chis-schedule-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chis-schedule-management
+      env: production
+  template:
+    metadata:
+      labels:
+        app: chis-schedule-management
+        env: production
+        role: rolling-update
+    spec:
+      containers:
+      - image: bakcovn/chis-schedule-management:latest
+        imagePullPolicy: Always
+        name: chis-schedule-management
+      imagePullSecrets:
+      - name: regcred
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
